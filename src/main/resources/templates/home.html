@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solve, ANA!</title>
+        <link rel="stylesheet" href="/css/common.css">
+    </head>
+    <body>
+        <nav id="hnav">
+            <div>
+                <a href="/" id="logo">
+                    <img src="/imgs/logo.png">
+                    Solve, AnA
+                </a>
+            </div>
+            <div id="menu">
+                <a href="/problemset/recent">갓 구운 문제</a>
+                <a href="/problemset/trending">인기 문제</a>
+                <a href="/problemset">문제</a>
+                <a href="/search">검색</a>
+            </div>
+            <div>
+                <div th:if="${name}">
+                    <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
+                </div>
+                <div th:if="${name == null}">
+                    <a href="/oauth2/authorization/google">로그인</a>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <h1>'Solve, AnA!'에 오신걸 환영합니다!</h1>
+            
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>

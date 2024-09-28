@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>문제들 | Solve, ANA!</title>
+        <link rel="stylesheet" href="/css/common.css">
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            table td, th {
+                padding: .5rem;
+                border: 1px #5e5e5e solid;
+            }
+
+            table tr:nth-of-type(1) > th:nth-of-type(2) {
+                width: 40%;
+            }
+
+            table tr:nth-of-type(1) > th:nth-of-type(3) {
+                width: 20%;
+            }
+
+            table tr:nth-of-type(1) > th:nth-last-child(-n + 4) {
+                width: 10%;
+            }
+
+            tr:nth-child(even) {
+                background-color: #393939;
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="hnav">
+            <div>
+                <a href="/" id="logo">
+                    <img src="/imgs/logo.png">
+                    Solve, AnA
+                </a>
+            </div>
+            <div id="menu">
+                <a href="/problemset/recent">갓 구운 문제</a>
+                <a href="/problemset/trending">인기 문제</a>
+                <a href="/problemset">문제</a>
+                <a href="/search">검색</a>
+            </div>
+            <div>
+                <div th:if="${name}">
+                    <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
+                </div>
+                <div th:if="${name == null}">
+                    <a href="/oauth2/authorization/google">로그인</a>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <h1>전체 문제</h1>
+            <table>
+                <tr>
+                    <th>문제</th>
+                    <th>제목</th>
+                    <th>정보</th>
+                    <th>맞힌 사람</th>
+                    <th>제출</th>
+                    <th>정답 비율</th>
+                    <th>출제자</th>
+                </tr>
+                <tr>
+                    <td>1000</td>
+                    <td><a>습하소닉</a></td>
+                    <td>스페셜저지</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>정은수</td>
+                </tr>
+                <th:block th:each="problem : ${problems}">
+                    <tr>
+                        <td th:text="${problem.id}">...</td>
+                        <td><a th:text="${problem.title}" th:href="@{/problem/{id}(id=${problem.id})}"></a></td>
+                        <td th:text="${problem.info}">...</td>
+                        <td th:text="${problem.accepted}">...</td>
+                        <td th:text="${problem.pushed}">...</td>
+                        <td th:text="${problem.getPercentage()}">...</td>
+                        <td th:text="${problem.author}">...</td>
+                    </tr>
+                </th:block>
+            </table>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>

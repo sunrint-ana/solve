@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solve, ANA!</title>
+        <link rel="stylesheet" href="/css/common.css">
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            table td, th {
+                text-align: left;
+                padding: .5rem;
+            }
+
+            table tr:first-child {
+                border-bottom: 1px #5e5e5e solid;
+            }
+
+            table tr:last-child {
+                border-top: 1px #5e5e5e solid;
+            }
+
+            .ph {
+                display: inline-block;
+                position: relative;
+            }
+
+            .ph:before {
+                position: absolute;
+                content: '';
+                width: 200%;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(159,43,43,1) 0%, rgba(159,43,43,1) 54%, rgba(159,43,43,0) 100%);
+                bottom: -.5rem;
+            }
+
+            main > nav {
+                margin: 2rem 0;
+            }
+
+            main > nav > a {
+                padding: 1rem;
+            }
+
+            main > nav > a.selected {
+                background-color: #610c0c;
+            }
+
+            main > nav > a:hover {
+                padding: 1rem;
+                background-color: #390404;
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="hnav">
+            <div>
+                <a href="/" id="logo">
+                    <img src="/imgs/logo.png">
+                    Solve, AnA
+                </a>
+            </div>
+            <div id="menu">
+                <a href="/problemset/recent">갓 구운 문제</a>
+                <a href="/problemset/trending">인기 문제</a>
+                <a href="/problemset">문제</a>
+                <a href="/search">검색</a>
+            </div>
+            <div>
+                <div th:if="${name}">
+                    <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
+                </div>
+                <div th:if="${name == null}">
+                    <a href="/oauth2/authorization/google">로그인</a>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <nav>
+                <a class="selected" th:text="${problem.id + '번'}"></a>
+                <a>제출</a>
+            </nav>
+            <h1 th:text="${problem.title}"></h1>
+            <hr/>
+            <br/>
+            <table id="info">
+                <tr>
+                    <th>시간 제한</th>
+                    <th>메모리 제한</th>
+                    <th>제출</th>
+                    <th>맞힌 사람</th>
+                    <th>정답 비율</th>
+                </tr>
+                <tr>
+                    <td th:text="${problem.time + ' 초'}"></td>
+                    <td th:text="${problem.memory} + ' MB'"></td>
+                    <td th:text="${problem.pushed}"></td>
+                    <td th:text="${problem.accepted}"></td>
+                    <td th:text="${problem.percentage}"></td>
+                </tr>
+            </table>
+            <h2 class="ph">문제</h2>
+            <div>
+                afasdf
+            </div>
+            <br/>
+            <h2 class="ph">입력</h2>
+            <div>
+                fdsafas
+            </div>
+            <br/>
+            <h2 class="ph">출력</h2>
+            <div>
+                asdfasdf
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
