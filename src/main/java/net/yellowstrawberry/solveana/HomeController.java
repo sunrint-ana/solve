@@ -16,5 +16,8 @@ public class HomeController {
         return "home";
     }
 
-
+    @GetMapping("/submit")
+    public String submit(Model model) {
+        return "submit";
+    }
 }

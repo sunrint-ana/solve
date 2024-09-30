@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>제출 | Solve, ANA!</title>
+        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/lib/codemirror.css">
+        <script src="/lib/codemirror.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/clike/clike.min.js"></script>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            table td, th {
+                text-align: left;
+                padding: .5rem;
+            }
+
+            table tr:first-child {
+                border-bottom: 1px #5e5e5e solid;
+            }
+
+            table tr:last-child {
+                border-top: 1px #5e5e5e solid;
+            }
+
+            .ph {
+                display: inline-block;
+                position: relative;
+            }
+
+            .ph:before {
+                position: absolute;
+                content: '';
+                width: 200%;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(159,43,43,1) 0%, rgba(159,43,43,1) 54%, rgba(159,43,43,0) 100%);
+                bottom: -.5rem;
+            }
+
+            main > nav {
+                margin: 2rem 0;
+            }
+
+            main > nav > a {
+                padding: 1rem;
+            }
+
+            main > nav > a.selected {
+                background-color: #610c0c;
+            }
+
+            main > nav > a:hover {
+                padding: 1rem;
+                background-color: #390404;
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="hnav">
+            <div>
+                <a href="/" id="logo">
+                    <img src="/imgs/logo.png">
+                    Solve, AnA
+                </a>
+            </div>
+            <div id="menu">
+                <a href="/problemset/recent">갓 구운 문제</a>
+                <a href="/problemset/trending">인기 문제</a>
+                <a href="/problemset">문제</a>
+                <a href="/search">검색</a>
+            </div>
+            <div>
+                <div th:if="${name}">
+                    <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
+                </div>
+                <div th:if="${name == null}">
+                    <a href="/oauth2/authorization/google">로그인</a>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <nav>
+                <a>10번</a>
+                <a class="selected">제출</a>
+            </nav>
+            <h1>습하소닉</h1>
+            <hr/>
+            <br/>
+            <table id="info">
+                <tr>
+                    <th>시간 제한</th>
+                    <th>메모리 제한</th>
+                    <th>제출</th>
+                    <th>맞힌 사람</th>
+                    <th>정답 비율</th>
+                </tr>
+                <tr>
+                    <td>1초</td>
+                    <td>100MB</td>
+                    <td th:text="${'0'}"></td>
+                    <td th:text="${'0'}"></td>
+                    <td th:text="${'0'}"></td>
+                </tr>
+            </table>
+            <h2 class="ph">코드 제출</h2>
+            <form method="post" th:action="@{/submit}" enctype="text/plain">
+                <textarea id="input" rows="10" cols="50"></textarea>
+                <input type="submit" th:value="제출">
+            </form>
+            <script>
+                var editor = CodeMirror.fromTextArea(document.getElementById("input"), {
+                    lineNumbers: true,
+                    mode: "text/x-java",
+                });
+            </script>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
