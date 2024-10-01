@@ -12,6 +12,6 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     Page<ProblemSeek> findAllBy(Pageable pageable);
     Optional<ProblemInfo> findByIdIs(Long id);
     List<ProblemSeek> findByTitle(String title);
-    @Query("select p.testCases from Problem p")
+    @Query("select p.testCases from Problem p where p.id = :id")
     Optional<String> findByIdGetTestCases(Long id);
 }
