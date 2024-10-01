@@ -82,7 +82,7 @@
         </nav>
         <main>
             <nav>
-                <a th:href="@{/problem/{id}(id=${id})}">10번</a>
+                <a th:href="@{/problem/{id}(id=${id})}" th:text="${id + '번'}">...</a>
                 <a class="selected">제출</a>
             </nav>
             <h1 th:text="${problem.title}"></h1>

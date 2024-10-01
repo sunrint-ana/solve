@@ -20,7 +20,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/")
+                        .loginPage("/oauth2/authorization/google")
                         .defaultSuccessUrl("/")
                         .failureUrl("/?login=error")
                 );

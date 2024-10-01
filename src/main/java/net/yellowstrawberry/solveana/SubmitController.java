@@ -35,6 +35,7 @@ public class SubmitController {
     @GetMapping(value = "/{id}")
     public String submitM(@PathVariable long id, Model model, @AuthenticationPrincipal OAuth2User principal) {
         if (principal != null) model.addAttribute("given_name", principal.getAttribute("given_name"));
+        if(!principal.getAttribute("email").toString().endsWith("@sunrint.hs.kr")) return "redirect:/?noaccess";
         ProblemInfo info = problemRepository.findByIdIs(id).orElse(null);
         if(info!=null) {
             model.addAttribute("problem", info);
@@ -46,8 +47,9 @@ public class SubmitController {
     @PostMapping(value = "/{id}")
     public String submit(@PathVariable long id, Model model, @AuthenticationPrincipal OAuth2User principal, @ModelAttribute SourceCode code) throws InterruptedException {
         if (principal == null) return "redirect:/";
+        if(!principal.getAttribute("email").toString().endsWith("@sunrint.hs.kr")) return "redirect:/?noaccess";
         model.addAttribute("given_name", principal.getAttribute("given_name"));
-        problemRepository.findByIdGetTestCases(id).ifPresent(problem -> executor.submit(() -> TestManager.schedule(id, principal.getAttribute("sub"), problem, code.getSourceCode())));
+        problemRepository.findByIdGetTestCases(id).ifPresent(problem -> executor.submit(() -> TestManager.schedule(id, principal.getAttribute("name"), problem, code.getSourceCode())));
         Thread.sleep(100);
         return "redirect:/submit/results";
     }
@@ -55,9 +57,10 @@ public class SubmitController {
     @GetMapping(value = "/results")
     public String submit(Model model, @AuthenticationPrincipal OAuth2User principal, @RequestParam(name = "p",defaultValue = "0") Integer page) {
         if (principal == null) return "redirect:/";
+        if(!principal.getAttribute("email").toString().endsWith("@sunrint.hs.kr")) return "redirect:/?noaccess";
         model.addAttribute("given_name", principal.getAttribute("given_name"));
         PageRequest pageable = PageRequest.of(page, 30);
-        Page<Submit> submitPage = submitRepository.findAllByUser(pageable, principal.getAttribute("sub"));
+        Page<Submit> submitPage = submitRepository.findAllByUser(pageable, principal.getAttribute("name"));
         model.addAttribute("submits", submitPage.getContent());
         return "results";
     }

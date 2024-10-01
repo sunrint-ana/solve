@@ -35,16 +35,21 @@ public class TestManager {
         Submit submit = submitRepository.saveAndFlush(new Submit(problemId, user, "준비중", sourceCode, new Timestamp(System.currentTimeMillis())));
         String id = "SA_"+submit.getId();
         Tester tester = new Tester(id);
-        if(!tester.compile(sourceCode.replaceFirst("(public)*( *)+class( *)+Main", "public class "+id))) { submit.setStatus("컴파일 에러"); submitRepository.save(submit); problemRepository.findById(problemId).ifPresent(problem -> {
+        if(!tester.compile(sourceCode.replaceFirst("(public)*( *)+class( *)+Main", "public class "+id)
+                .replaceAll("(?!\").*^(import java\\.n?io\\..*[Ff]ile.*).*(?!\");", "")
+        )) { submit.setStatus("컴파일 에러"); submitRepository.save(submit); problemRepository.findById(problemId).ifPresent(problem -> {
             problem.push(false);
             problemRepository.save(problem);
         }); return; }
 
         submit.setStatus("채점중");
         submitRepository.save(submit);
-        IOManager.registerTestCase(id, new TestCases(getTestCases(testCases)));
+        TestCases tc = new TestCases(getTestCases(testCases));
+        IOManager.registerTestCase(id, tc);
         String code = null;
         while (IOManager.passTestCase(id)&&(code = tester.run(1)) == null) {
+            submit.setStatus("채점중 (%s)".formatted(tc.getPercentage()));
+            submitRepository.save(submit);
             if(!IOManager.checkTestCase(id)) {
                 submit.setStatus("틀렸습니다!");
                 submitRepository.save(submit);
@@ -71,7 +76,7 @@ public class TestManager {
     private static TestCase[] getTestCases(String testCases) {
         List<TestCase> testCaseList = new ArrayList<>();
         JSONObject object = new JSONObject(testCases);
-        for (Object o : object.getJSONArray("testcase")) {
+        for (Object o : object.getJSONArray("testcases")) {
             JSONObject testCase = (JSONObject) o;
             testCaseList.add(new TestCase(testCase.getString("ipt"), testCase.getString("opt")));
         }

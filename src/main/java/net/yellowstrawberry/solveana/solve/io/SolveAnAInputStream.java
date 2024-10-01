@@ -1,5 +1,7 @@
 package net.yellowstrawberry.solveana.solve.io;
 
+import org.springframework.lang.NonNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,7 +35,7 @@ public class SolveAnAInputStream extends InputStream {
     }
 
     @Override
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(@NonNull byte[] b, int off, int len) throws IOException {
         String s = findUnique();
         if(s!=null) {
             if(!testCases.containsKey(s)) return -1;

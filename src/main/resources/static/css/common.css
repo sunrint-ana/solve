@@ -1,6 +1,9 @@
 @import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/static/complete/WantedSans.min.css");
 
 body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     background-color: #141414;
     margin: 0;
     padding: 0;
@@ -15,7 +18,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    width: 100%;
     padding: 1rem;
+    box-sizing: border-box;
     border-bottom: 1px #cecece solid;
 }
 
@@ -62,4 +68,6 @@ a:hover {
 
 main {
     padding: 1rem;
+    width: 80%;
+    max-width: 80rem;
 }

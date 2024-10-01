@@ -1,6 +1,7 @@
 package net.yellowstrawberry.solveana.db.problem;
 
 import jakarta.persistence.*;
+import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.Locale;
@@ -22,6 +23,14 @@ public class Problem {
     private String problem;
     private String testCases;
 
+
+    @Transient
+    private String pb;
+    @Transient
+    private String ipt;
+    @Transient
+    private String opt;
+
     public Problem() {}
 
     public Problem(Long id, String title, String info, Long accepted, Long pushed, String author, Timestamp timestamp, Integer time, Integer memory, String problem, String testCases) {
@@ -36,6 +45,11 @@ public class Problem {
         this.memory = memory;
         this.problem = problem;
         this.testCases = testCases;
+
+        JSONObject o = new JSONObject(problem);
+        pb = o.getString("pb");
+        ipt = o.getString("ipt");
+        opt = o.getString("opt");
     }
 
     public Long getId() {
@@ -80,6 +94,18 @@ public class Problem {
 
     public Timestamp getTimestamp() {
         return timestamp;
+    }
+
+    public String getPb() {
+        return pb;
+    }
+
+    public String getIpt() {
+        return ipt;
+    }
+
+    public String getOpt() {
+        return opt;
     }
 
     public String getPercentage() {

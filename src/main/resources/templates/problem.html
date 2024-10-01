@@ -4,8 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Solve, ANA!</title>
+        <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
         <link rel="stylesheet" href="/css/common.css">
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -52,6 +55,35 @@
             main > nav > a:hover {
                 padding: 1rem;
                 background-color: #390404;
+            }
+
+            .mk {
+                line-height: 2rem;
+            }
+
+            blockquote {
+                margin: 0 1em;
+                padding: .3em 1em;
+                border-left: 5px solid rgba(255, 255, 255, 0.2);
+            }
+
+            blockquote p {
+                display: inline;
+                margin: 0;
+            }
+
+            .example {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            pre {
+                font-family: "JetBrains Mono", monospace;
+                font-optical-sizing: auto;
+                padding: 1rem;
+                background-color: #252525;
+                border: #454545 1px solid;
             }
         </style>
     </head>
@@ -102,21 +134,39 @@
                 </tr>
             </table>
             <h2 class="ph">문제</h2>
-            <div class="mk">afasdf</div>
+            <div class="mk" th:text="${problem.getMProblem()}"></div>
             <br/>
             <h2 class="ph">입력</h2>
-            <div class="mk">fdsafas</div>
+            <div class="mk" th:text="${problem.getInputs()}"></div>
             <br/>
             <h2 class="ph">출력</h2>
-            <div class="mk">asdfasdf</div>
+            <div class="mk" th:text="${problem.getOutputs()}"></div>
+            <div id="examples">
+                <th:block th:each="ex,i : ${problem.getExamples()}">
+                    <div class="example">
+                        <div>
+                            <h2 class="ph" th:text="${'예제 입력 '+i.count}"></h2>
+                            <pre><code th:text="${ex.getIpt()}"></code></pre>
+                        </div>
+                        <div>
+                            <h2 class="ph" th:text="${'예제 출력 '+i.count}"></h2>
+                            <pre><code th:text="${ex.getOpt()}"></code></pre>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
         </main>
         <footer>
 
         </footer>
-        <script type="module">
-            import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+        <script>
+            const md = window.markdownit({
+                breaks: true,
+                linkify: true,
+                typographer: true
+            });
             document.querySelectorAll(".mk").forEach((el) => {
-                el.innerHTML = marked.parse(el.innerHTML);
+                el.innerHTML = md.render(el.innerHTML.replaceAll("&gt;", ">").replaceAll(/> *\n/gm, "> \n\n"));
             });
         </script>
     </body>
