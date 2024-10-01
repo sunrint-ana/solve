@@ -83,6 +83,11 @@ public class Problem {
     }
 
     public String getPercentage() {
-        return String.format(Locale.KOREA, "%.3f%%", accepted.longValue()==pushed.longValue() && pushed==0?0:accepted.doubleValue()/pushed.doubleValue());
+        return String.format(Locale.KOREA, "%.3f%%", accepted.longValue()==pushed.longValue() && pushed==0?0:(accepted.doubleValue()/pushed.doubleValue())*100);
+    }
+
+    public void push(boolean succeed) {
+        pushed++;
+        accepted += succeed ? 1 : 0;
     }
 }

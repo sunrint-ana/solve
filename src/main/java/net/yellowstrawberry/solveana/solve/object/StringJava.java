@@ -1,4 +1,4 @@
-package net.yellowstrawberry.solveana.solve;
+package net.yellowstrawberry.solveana.solve.object;
 
 import javax.tools.SimpleJavaFileObject;
 import java.net.URI;

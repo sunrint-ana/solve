@@ -1,4 +1,6 @@
-package net.yellowstrawberry.solveana.solve;
+package net.yellowstrawberry.solveana.solve.memory;
+
+import net.yellowstrawberry.solveana.solve.object.ByteJava;
 
 import javax.tools.*;
 import java.util.Hashtable;
@@ -6,8 +8,8 @@ import java.util.Map;
 
 public class InMemoryFileManager extends ForwardingJavaFileManager<JavaFileManager> {
 
-    private ClassLoader loader;
-    private Map<String, ByteJava> compiledClasses;
+    private final ClassLoader loader;
+    private final Map<String, ByteJava> compiledClasses;
 
     public InMemoryFileManager(StandardJavaFileManager standardManager) {
         super(standardManager);

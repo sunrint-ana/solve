@@ -15,16 +15,15 @@
                 </a>
             </div>
             <div id="menu">
-                <a href="/problemset/recent">갓 구운 문제</a>
-                <a href="/problemset/trending">인기 문제</a>
                 <a href="/problemset">문제</a>
+                <a href="/submit/results">채점 현황</a>
                 <a href="/search">검색</a>
             </div>
             <div>
-                <div th:if="${name}">
+                <div th:if="${given_name}">
                     <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
                 </div>
-                <div th:if="${name == null}">
+                <div th:if="${given_name == null}">
                     <a href="/oauth2/authorization/google">로그인</a>
                 </div>
             </div>

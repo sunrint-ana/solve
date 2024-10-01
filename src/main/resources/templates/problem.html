@@ -64,16 +64,15 @@
                 </a>
             </div>
             <div id="menu">
-                <a href="/problemset/recent">갓 구운 문제</a>
-                <a href="/problemset/trending">인기 문제</a>
                 <a href="/problemset">문제</a>
+                <a href="/submit/results">채점 현황</a>
                 <a href="/search">검색</a>
             </div>
             <div>
-                <div th:if="${name}">
+                <div th:if="${given_name}">
                     <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
                 </div>
-                <div th:if="${name == null}">
+                <div th:if="${given_name == null}">
                     <a href="/oauth2/authorization/google">로그인</a>
                 </div>
             </div>
@@ -81,7 +80,7 @@
         <main>
             <nav>
                 <a class="selected" th:text="${problem.id + '번'}"></a>
-                <a>제출</a>
+                <a th:href="@{/submit/{id}(id=${problem.id})}">제출</a>
             </nav>
             <h1 th:text="${problem.title}"></h1>
             <hr/>
@@ -103,22 +102,22 @@
                 </tr>
             </table>
             <h2 class="ph">문제</h2>
-            <div>
-                afasdf
-            </div>
+            <div class="mk">afasdf</div>
             <br/>
             <h2 class="ph">입력</h2>
-            <div>
-                fdsafas
-            </div>
+            <div class="mk">fdsafas</div>
             <br/>
             <h2 class="ph">출력</h2>
-            <div>
-                asdfasdf
-            </div>
+            <div class="mk">asdfasdf</div>
         </main>
         <footer>
 
         </footer>
+        <script type="module">
+            import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+            document.querySelectorAll(".mk").forEach((el) => {
+                el.innerHTML = marked.parse(el.innerHTML);
+            });
+        </script>
     </body>
 </html>

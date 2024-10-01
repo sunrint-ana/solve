@@ -1,4 +1,6 @@
-package net.yellowstrawberry.solveana.solve;
+package net.yellowstrawberry.solveana.solve.memory;
+
+import net.yellowstrawberry.solveana.solve.object.ByteJava;
 
 import java.util.Map;
 
@@ -6,7 +8,7 @@ import static java.util.Objects.requireNonNull;
 
 public class InMemoryClassLoader extends ClassLoader {
 
-    private InMemoryFileManager manager;
+    private final InMemoryFileManager manager;
 
     public InMemoryClassLoader(ClassLoader parent, InMemoryFileManager manager) {
         super(parent);

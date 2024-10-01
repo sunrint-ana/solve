@@ -67,26 +67,25 @@
                 </a>
             </div>
             <div id="menu">
-                <a href="/problemset/recent">갓 구운 문제</a>
-                <a href="/problemset/trending">인기 문제</a>
                 <a href="/problemset">문제</a>
+                <a href="/submit/results">채점 현황</a>
                 <a href="/search">검색</a>
             </div>
             <div>
-                <div th:if="${name}">
+                <div th:if="${given_name}">
                     <p><span th:text="${given_name}"></span> | <a href="/logout" id="logout">로그아웃</a></p>
                 </div>
-                <div th:if="${name == null}">
+                <div th:if="${given_name == null}">
                     <a href="/oauth2/authorization/google">로그인</a>
                 </div>
             </div>
         </nav>
         <main>
             <nav>
-                <a>10번</a>
+                <a th:href="@{/problem/{id}(id=${id})}">10번</a>
                 <a class="selected">제출</a>
             </nav>
-            <h1>습하소닉</h1>
+            <h1 th:text="${problem.title}"></h1>
             <hr/>
             <br/>
             <table id="info">
@@ -98,16 +97,16 @@
                     <th>정답 비율</th>
                 </tr>
                 <tr>
-                    <td>1초</td>
-                    <td>100MB</td>
-                    <td th:text="${'0'}"></td>
-                    <td th:text="${'0'}"></td>
-                    <td th:text="${'0'}"></td>
+                    <td th:text="${problem.time + ' 초'}"></td>
+                    <td th:text="${problem.memory} + ' MB'"></td>
+                    <td th:text="${problem.pushed}"></td>
+                    <td th:text="${problem.accepted}"></td>
+                    <td th:text="${problem.percentage}"></td>
                 </tr>
             </table>
             <h2 class="ph">코드 제출</h2>
-            <form method="post" th:action="@{/submit}" enctype="text/plain">
-                <textarea id="input" rows="10" cols="50"></textarea>
+            <form method="post" th:action="@{/submit/{id}(id=${problem.id})}" th:object="${sourceCode}">
+                <textarea id="input" rows="10" cols="50" th:field="*{code}"></textarea>
                 <input type="submit" th:value="제출">
             </form>
             <script>

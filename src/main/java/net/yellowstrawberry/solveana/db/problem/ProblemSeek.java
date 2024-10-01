@@ -10,6 +10,6 @@ public interface ProblemSeek {
     Long getPushed();
     String getAuthor();
     default String getPercentage() {
-        return String.format(Locale.KOREA, "%.3f%%", getAccepted().longValue()==getPushed().longValue() && getPushed()==0?0:getAccepted().doubleValue()/getPushed().doubleValue());
+        return String.format(Locale.KOREA, "%.3f%%", getAccepted().longValue()==getPushed().longValue() && getPushed()==0?0:(getAccepted().doubleValue()/getPushed().doubleValue())*100);
     }
 }

@@ -13,5 +13,5 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     Optional<ProblemInfo> findByIdIs(Long id);
     List<ProblemSeek> findByTitle(String title);
     @Query("select p.testCases from Problem p")
-    String findByIdGetTestCases(Long id);
+    Optional<String> findByIdGetTestCases(Long id);
 }
