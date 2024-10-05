@@ -48,6 +48,8 @@ public class TimeLimitedCodeBlock {
             } else {
                 throw new IllegalStateException(t);
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

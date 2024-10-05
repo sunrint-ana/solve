@@ -11,7 +11,6 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal OAuth2User principal) {
         if (principal != null) {
-            System.out.println(principal.getAttribute("given_name").toString());
             model.addAttribute("given_name", principal.getAttribute("given_name"));
         }
         return "home";

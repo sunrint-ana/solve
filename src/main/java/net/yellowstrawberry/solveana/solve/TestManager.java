@@ -36,7 +36,7 @@ public class TestManager {
         String id = "SA_"+submit.getId();
         Tester tester = new Tester(id);
         if(!tester.compile(sourceCode.replaceFirst("(public)*( *)+class( *)+Main", "public class "+id)
-                .replaceAll("(?!\").*^(import java\\.n?io\\..*[Ff]ile.*).*(?!\");", "")
+                .replaceAll("(?!\").*^(import java\\.n?io\\..*[Ff]ile.*).*(?!\");", "").replaceAll("pacakge (.*);", "")
         )) { submit.setStatus("컴파일 에러"); submitRepository.save(submit); problemRepository.findById(problemId).ifPresent(problem -> {
             problem.push(false);
             problemRepository.save(problem);
@@ -62,8 +62,8 @@ public class TestManager {
             }
         }
         IOManager.unregisterTestCase(id);
-        submit.setTime(tester.getAverageTime());
-        submit.setStatus(code==null?"맞았습니다!":code);
+        submit.setTime(code==null?tester.getAverageTime():-1);
+        submit.setStatus(code==null?"맞았습니다!":"틀렸습니다!");
         submitRepository.save(submit);
 
         String finalCode = code;
